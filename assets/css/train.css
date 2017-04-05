@@ -1,0 +1,17 @@
+body {
+	background-image: url(../images/topography.png);
+}
+
+.rounded{
+	border-radius: 15px;
+
+}
+
+.hazard {
+	background-image: url(../images/old-hazard-stripes-texture.jpg);
+	color: #feca1e;
+}
+
+/*.trainInfo {
+	background-color: white;
+}*/
