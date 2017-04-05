@@ -12,6 +12,13 @@ body {
 	color: #feca1e;
 }
 
+tr {
+	padding: 0, 10px, 0, 10px;
+}
+
+input {
+	padding: 0, 10px, 0, 10px;
+}
 /*.trainInfo {
 	background-color: white;
 }*/

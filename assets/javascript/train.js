@@ -42,12 +42,25 @@
       console.log(trainStart);
       console.log(trainFreq);
 
+      var startTime = moment(trainStart, "hh:mm");
+      var currentTime = moment().format("hh:mm");
+      var diffTime = moment().diff(moment(startTime), "minutes");
+      console.log(diffTime);
+      var waitTime = diffTime % trainFreq;
+      var minutesTT = trainFreq - waitTime;
+      var nextTrain = moment().add(minutesTT, "hh:mm");
+
+
+
       $("#on-time").append(`
           <tr>
             <td id="nameDisplay">${trainName}</td>
             <td id="trainDestination">${childSnapshot.val().destination}</td>
             <td id="trainFreq">${childSnapshot.val().freq}</td>
+            <td id="arrTime">${nextTrain}</td>
+            <td id="minutes">${minutesTT}</td>
           </tr>
+
         `);
       $("#name").val('');
       $("#destination").val('');
