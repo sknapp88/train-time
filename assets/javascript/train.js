@@ -13,7 +13,7 @@
 
   var database = firebase.database();
 
-  $("#action").click(function(){
+  $("#action").click(function(event){
 
     event.preventDefault();
 
@@ -28,39 +28,36 @@
       firstTime: firstTime,
       freq: freq
     });
-
-    database.ref().on("child_added", function(childSnapshot, prevChildKey){
-
-      var trainName = childSnapshot.val().name;
-      var trainDestination = childSnapshot.val().destination;
-      var trainStart = childSnapshot.val().firstTime;
-      var trainFreq = childSnapshot.val().freq;
-
-      var startTime = moment(trainStart, "hh:mm");
-      var currentTime = moment().format("hh:mm");
-      var diffTime = moment().diff(moment(startTime), "minutes");
-      var waitTime = diffTime % trainFreq;
-      var minutesTT = trainFreq - waitTime;
-      var nextTrain = moment().add(waitTime, "minutes");
-
-
-
-      $("#on-time").append(`
-        <tr>
-        <td id="nameDisplay">${trainName}</td>
-        <td id="trainDestination">${childSnapshot.val().destination}</td>
-        <td id="trainFreq">${childSnapshot.val().freq}</td>
-        <td id="arrTime">${moment(nextTrain).format("hh:mm")}</td>
-        <td id="minutes">${waitTime}</td>
-        </tr>
-
-        `);
-      $("#name").val('');
-      $("#destination").val('');
-      $("#first-time").val('');
-      $("#freq").val('');
-
-      return false;
-    });
-
   });
+  database.ref().on("child_added", function(childSnapshot){
+
+    var trainName = childSnapshot.val().name;
+    var trainDestination = childSnapshot.val().destination;
+    var trainStart = childSnapshot.val().firstTime;
+    var trainFreq = childSnapshot.val().freq;
+
+    var startTime = moment(trainStart, "hh:mm");
+    var currentTime = moment().format("hh:mm");
+    var diffTime = moment().diff(moment(startTime), "minutes");
+    var waitTime = diffTime % trainFreq;
+    var minutesTT = trainFreq - waitTime;
+    var nextTrain = moment().add(waitTime, "minutes");
+
+
+    
+    $("#on-time").append(`
+      <tr>
+      <td id="nameDisplay">${trainName}</td>
+      <td id="trainDestination">${childSnapshot.val().destination}</td>
+      <td id="trainFreq">${childSnapshot.val().freq}</td>
+      <td id="arrTime">${moment(nextTrain).format("hh:mm")}</td>
+      <td id="minutes">${waitTime}</td>
+      </tr>
+
+      `);
+    $("#name").val('');
+    $("#destination").val('');
+    $("#first-time").val('');
+    $("#freq").val('');
+  });
+
